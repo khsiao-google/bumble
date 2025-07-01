@@ -1471,6 +1471,15 @@ class Host(utils.EventEmitter):
         else:
             self.emit('classic_pairing_failure', event.bd_addr, event.status)
 
+    def on_hci_mode_change_event(self, event: hci.HCI_Mode_Change_Event):
+        self.emit(
+            "mode_change",
+            event.connection_handle,
+            event.status,
+            event.current_mode,
+            event.interval,
+        )
+
     def on_hci_pin_code_request_event(self, event):
         self.emit('pin_code_request', event.bd_addr)
 
